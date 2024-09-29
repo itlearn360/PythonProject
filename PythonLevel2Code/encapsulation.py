@@ -1,41 +1,33 @@
-class BankAccount:
-    def __init__(self, account_number, balance):
-        self.account_number = account_number
-        self.__balance = balance  # Private attribute, hidden from direct access
-
-    # Public method to view the balance
-    def get_balance(self):
-        return self.__balance
-
-    # Public method to deposit money
-    def deposit(self, amount):
-        if amount > 0:
-            self.__balance += amount
-            print(f"${amount} deposited successfully.")
+class Student:
+    def __init__(self, name, grade):
+        self.name = name
+        self.__grade = None  # Private attribute
+        self.set_grade(grade)  # Using setter to initialize the grade
+    
+    # Getter method to access the private grade attribute
+    def get_grade(self):
+        return self.__grade
+    
+    # Setter method to set and validate the grade
+    def set_grade(self, grade):
+        if 0 <= grade <= 100:
+            self.__grade = grade
+            print(f"Grade updated to {self.__grade} for {self.name}.")
         else:
-            print("Invalid deposit amount.")
+            print("Invalid grade! Grade must be between 0 and 100.")
 
-    # Public method to withdraw money
-    def withdraw(self, amount):
-        if 0 < amount <= self.__balance:
-            self.__balance -= amount
-            print(f"${amount} withdrawn successfully.")
-        else:
-            print("Insufficient balance or invalid withdrawal amount.")
+# Create a Student object
+student1 = Student("Alice", 85)
 
-# Create a BankAccount object
-account = BankAccount("12345", 1000)
+# Access the grade using the getter method
+print("Current Grade:", student1.get_grade())  # Output: Current Grade: 85
 
-# Accessing the balance using a getter method
-print("Current Balance:", account.get_balance())  # Output: Current Balance: 1000
+# Attempt to set a valid grade using the setter method
+student1.set_grade(92)  # Output: Grade updated to 92 for Alice.
 
-# Depositing money
-account.deposit(500)  # Output: $500 deposited successfully.
-print("New Balance:", account.get_balance())  # Output: New Balance: 1500
+# Attempt to set an invalid grade using the setter method
+student1.set_grade(105)  # Output: Invalid grade! Grade must be between 0 and 100.
 
-# Withdrawing money
-account.withdraw(200)  # Output: $200 withdrawn successfully.
-print("New Balance:", account.get_balance())  # Output: New Balance: 1300
+# Access the updated grade using the getter method
+print("Updated Grade:", student1.get_grade())  # Output: Updated Grade: 92
 
-# Attempting to directly access the private balance (will cause an error)
-# print(account.__balance)  # This will raise an AttributeError
